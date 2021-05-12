@@ -1,0 +1,7 @@
+data/Mass-2010-blocks-by-race/nhgis0038_shape
+data/Mass-2010-blocks-by-race/nhgis0038_csv
+
+data/*.geojson
+data/*.ndjson
+
+.DS_Store

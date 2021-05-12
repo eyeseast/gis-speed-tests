@@ -22,6 +22,7 @@ from tqdm import tqdm
     nargs=-1,
 )
 def speedtest(filenames):
+    results = []
     for filename in filenames:
         path = Path(filename)
         reader = FILE_TYPES[path.suffix]
@@ -32,6 +33,10 @@ def speedtest(filenames):
         end = datetime.datetime.now()
         result.time = end - start
 
+        results.append(result)
+
+    click.echo("\t".join(["Filename", "Count", "Time"]))
+    for result in results:
         click.echo(result)
 
 
@@ -81,12 +86,12 @@ FILE_TYPES = {
 
 @dataclass
 class Result:
-    filename: Path
+    path: Path
     count: int
     time: datetime.timedelta
 
     def __str__(self):
-        return "\t".join(map(str, [self.filename, self.count, self.time.seconds]))
+        return "\t".join(map(str, [self.path.name, self.count, self.time.seconds]))
 
 
 if __name__ == "__main__":

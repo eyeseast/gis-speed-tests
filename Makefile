@@ -5,8 +5,19 @@ NDJSON=data/ma-2010-blocks.ndjson
 SHP=data/Mass-2010-blocks-by-race/nhgis0038_shape/nhgis0038_shapefile_tl2010_250_block_2010/MA_block_2010.shp
 
 $(CSV): data/Mass-2010-blocks-by-race/nhgis0038_csv.zip
-	unzip $^
+	unzip -d $(dirname $@) $^
 	touch $@
+
+$(SHP): data/Mass-2010-blocks-by-race/nhgis0038_shape.zip
+	unzip $^
+	unzip data/Mass-2010-blocks-by-race/nhgis0038_shape/nhgis0038_shapefile_tl2010_250_block_2010.zip
+	touch $@
+
+$(NDJSON): $(SHP)
+	fio cat $^ > $@
+
+$(GEOJSON): $(NDJSON)
+	cat $^ | fio collect > $@
 
 csv: $(CSV)
 	pipenv run ./speedtest.py $^

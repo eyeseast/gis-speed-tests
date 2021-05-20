@@ -3,5 +3,6 @@ data/Mass-2010-blocks-by-race/nhgis0038_csv
 
 data/*.geojson
 data/*.ndjson
+data/shp/
 
 .DS_Store
